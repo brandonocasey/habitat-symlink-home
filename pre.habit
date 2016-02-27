@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+habitat_run() {
+  local file
+  for file in $(find "$habitat_dotfiles" -name '*.syml' && find "$habitat_dotfiles" -name '*.xsyml'); do
+    local symlink_file=""
+    case "$file" in
+      *.xsyml) symlink_file="${XDG_CONFIG_HOME:=$HOME/.config}/";;
+      *.syml) symlink_file="$HOME/.";;
+    esac
+    # remove extension
+    symlink_file="${symlink_file_to_create}$(basename "${file%.*}")"
+
+    habitat_debug "Creating $symlink_file -> $file"
+    if [ -d "$symlink_file" ]; then
+      rm -rf "$symlink_file"
+    fi
+    local symlink_dir="$(dirname "$symlink_file")"
+    if [ ! -d "$symlink_dir" ]; then
+      mkdir -p "$symlink_dir"
+    fi
+    ln -s -f "$file" "$symlink_file" 2>&1 > /dev/null
+  done
+}
+
+habitat_run "$@"

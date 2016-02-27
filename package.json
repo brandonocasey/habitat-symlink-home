@@ -1,0 +1,13 @@
+{
+  "name": "habitat-symlink-home",
+  "version": "1.0.0",
+  "description": "Symlink .syml files to HOME prefixed with a . and .xsmyl files to your XDG_CONFIG_HOME",
+  "install": "",
+  "scripts": [],
+  "files": [
+    "run.habit",
+    "pre.habit",
+    "post.habit"
+  ]
+}
+
